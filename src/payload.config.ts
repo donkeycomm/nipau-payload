@@ -67,7 +67,8 @@ export default buildConfig({
       ...(isProduction
         ? {
           ssl: {
-            rejectUnauthorized: false,
+            ca: fs.readFileSync(path.resolve(process.cwd(), 'ca-certificate.crt')),
+            rejectUnauthorized: true,
           },
         }
         : {
