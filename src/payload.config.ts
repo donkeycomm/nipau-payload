@@ -16,6 +16,7 @@ import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 import fs from "fs";
 import {Brands} from "@/collections/Brands";
+import {Events} from "@/collections/Events";
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -77,7 +78,7 @@ export default buildConfig({
         }),
     },
   }),
-  collections: [Pages, Brands, Posts, Media, Categories, Users],
+  collections: [Pages, Brands, Events, Posts, Media, Categories, Users],
   localization: {
     locales: ['en', 'nl'], // required
     defaultLocale: 'en', // required

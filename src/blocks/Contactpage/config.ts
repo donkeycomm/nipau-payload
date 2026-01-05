@@ -31,6 +31,37 @@ export const ContactPage: Block = {
       }),
       label: "Description",
     },
+    {
+      name: 'media',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+
+    {
+      name: 'address',
+      label: 'Address - title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'phone',
+      label: 'Phone - title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'showroom',
+      label: 'Showroom - title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'office',
+      label: 'Office - title',
+      type: 'text',
+      required: true,
+    },
   ],
   labels: {
     plural: 'Contacts',

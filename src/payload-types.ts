@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     brands: Brand;
+    events: Event;
     posts: Post;
     media: Media;
     categories: Category;
@@ -92,6 +93,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     brands: BrandsSelect<false> | BrandsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -462,6 +464,11 @@ export interface ContactPage {
     };
     [k: string]: unknown;
   } | null;
+  media?: (number | null) | Media;
+  address: string;
+  phone: string;
+  showroom: string;
+  office: string;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contactpage';
@@ -548,6 +555,72 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  isInternal: boolean;
+  eventDate: string;
+  featuredImage: number | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  content2: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  tickets?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (number | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -996,6 +1069,10 @@ export interface PayloadLockedDocument {
         value: number | Brand;
       } | null)
     | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
         relationTo: 'posts';
         value: number | Post;
       } | null)
@@ -1186,6 +1263,11 @@ export interface EventsPageSelect<T extends boolean = true> {
 export interface ContactPageSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  media?: T;
+  address?: T;
+  phone?: T;
+  showroom?: T;
+  office?: T;
   id?: T;
   blockName?: T;
 }
@@ -1207,6 +1289,39 @@ export interface BrandsSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  isInternal?: T;
+  eventDate?: T;
+  featuredImage?: T;
+  content?: T;
+  content2?: T;
+  tickets?: T;
   meta?:
     | T
     | {
@@ -1706,26 +1821,11 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  navItems?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
+  address: string;
+  phone: string;
+  mail: string;
+  showroom: string;
+  office: string;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1757,20 +1857,11 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
-    | T
-    | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
+  address?: T;
+  phone?: T;
+  mail?: T;
+  showroom?: T;
+  office?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1791,6 +1882,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'brands';
           value: number | Brand;
+        } | null)
+      | ({
+          relationTo: 'events';
+          value: number | Event;
         } | null)
       | ({
           relationTo: 'posts';
