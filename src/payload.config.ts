@@ -1,4 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -12,7 +14,6 @@ import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
-import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 import fs from "fs";
 import {Brands} from "@/collections/Brands";
@@ -67,8 +68,7 @@ export default buildConfig({
       ...(isProduction
         ? {
           ssl: {
-            ca: fs.readFileSync(path.resolve(process.cwd(), 'ca-certificate.crt')),
-            rejectUnauthorized: true,
+            rejectUnauthorized: false,
           },
         }
         : {
@@ -86,7 +86,23 @@ export default buildConfig({
   },
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
-  plugins,
+    plugins: [
+      payloadCloudPlugin(),
+      s3Storage({
+        collections: {
+          media: true,
+        },
+        bucket: process.env.DO_SPACES_BUCKET || '',
+        config: {
+          credentials: {
+            accessKeyId: process.env.DO_SPACES_KEY_ID || '',
+            secretAccessKey: process.env.DO_SPACES_ACCESS_KEY || '',
+          },
+          region: process.env.DO_SPACES_REGION,
+          endpoint: process.env.DO_SPACES_ENDPOINT,
+        },
+      }),
+    ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
