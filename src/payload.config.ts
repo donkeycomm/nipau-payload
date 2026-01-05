@@ -3,7 +3,7 @@ import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
 import path from 'path'
-import { buildConfig, PayloadRequest } from 'payload'
+import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
@@ -14,7 +14,6 @@ import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
-import { getServerSideURL } from './utilities/getURL'
 import fs from "fs";
 import {Brands} from "@/collections/Brands";
 import {Events} from "@/collections/Events";
@@ -24,7 +23,34 @@ const dirname = path.dirname(filename)
 const isProduction = process.env.NODE_ENV === 'production'
 
 export default buildConfig({
+  localization: {
+    locales: ['en', 'nl'], // required
+    defaultLocale: 'en', // required
+  },
   admin: {
+    user: Users.slug,
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
+    meta: {
+      titleSuffix: 'Nipau CMS',
+
+      description:
+        'Nipau CMS is a headless content management system for managing your content easily.',
+      authors: [
+        {
+          name: 'Indy Vanhaelst',
+        },
+      ],
+      robots: 'noindex, nofollow',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          url: 'https://nipau.be/favicon.ico',
+        },
+      ],
+    },
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
@@ -33,35 +59,15 @@ export default buildConfig({
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],
     },
-    importMap: {
-      baseDir: path.resolve(dirname),
-    },
-    user: Users.slug,
-    livePreview: {
-      breakpoints: [
-        {
-          label: 'Mobile',
-          name: 'mobile',
-          width: 375,
-          height: 667,
-        },
-        {
-          label: 'Tablet',
-          name: 'tablet',
-          width: 768,
-          height: 1024,
-        },
-        {
-          label: 'Desktop',
-          name: 'desktop',
-          width: 1440,
-          height: 900,
-        },
-      ],
-    },
   },
   // This config helps us configure global or default features that the other editors can inherit
-  editor: lexicalEditor({}),
+  collections: [Pages, Brands, Events, Posts, Media, Categories, Users],
+  globals: [Header, Footer],
+  editor: lexicalEditor(),
+  secret: process.env.PAYLOAD_SECRET,
+  typescript: {
+    outputFile: path.resolve(dirname, 'payload-types.ts'),
+  },
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
@@ -79,48 +85,22 @@ export default buildConfig({
         }),
     },
   }),
-  collections: [Pages, Brands, Events, Posts, Media, Categories, Users],
-  localization: {
-    locales: ['en', 'nl'], // required
-    defaultLocale: 'en', // required
-  },
-  cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
-    plugins: [
-      payloadCloudPlugin(),
-      s3Storage({
-        collections: {
-          media: true,
-        },
-        bucket: process.env.DO_SPACES_BUCKET || '',
-        config: {
-          credentials: {
-            accessKeyId: process.env.DO_SPACES_KEY_ID || '',
-            secretAccessKey: process.env.DO_SPACES_ACCESS_KEY || '',
-          },
-          region: process.env.DO_SPACES_REGION,
-          endpoint: process.env.DO_SPACES_ENDPOINT,
-        },
-      }),
-    ],
-  secret: process.env.PAYLOAD_SECRET,
   sharp,
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
-  jobs: {
-    access: {
-      run: ({ req }: { req: PayloadRequest }): boolean => {
-        // Allow logged in users to execute this endpoint (default)
-        if (req.user) return true
-
-        // If there is no logged in user, then check
-        // for the Vercel Cron secret to be present as an
-        // Authorization header:
-        const authHeader = req.headers.get('authorization')
-        return authHeader === `Bearer ${process.env.CRON_SECRET}`
+  plugins: [
+    payloadCloudPlugin(),
+    s3Storage({
+      collections: {
+        media: true,
       },
-    },
-    tasks: [],
-  },
+      bucket: process.env.DO_SPACES_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.DO_SPACES_KEY_ID || '',
+          secretAccessKey: process.env.DO_SPACES_ACCESS_KEY || '',
+        },
+        region: process.env.DO_SPACES_REGION,
+        endpoint: process.env.DO_SPACES_ENDPOINT,
+      },
+    }),
+  ],
 })
