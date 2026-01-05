@@ -1896,6 +1896,216 @@ export interface TaskSchedulePublish {
   };
   output?: unknown;
 }
+
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerBlock".
+ */
+export interface BannerBlock {
+  style: 'info' | 'warning' | 'error' | 'success';
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'banner';
+}
+
+export interface CallToActionBlock {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+        | ({
+        relationTo: 'posts';
+        value: number | Post;
+      } | null);
+      url?: string | null;
+      label: string;
+      /**
+       * Choose how the link should be rendered.
+       */
+      appearance?: ('default' | 'outline') | null;
+    };
+    id?: string | null;
+  }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlock".
+ */
+export interface ContentBlock {
+  columns?:
+    | {
+    size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    enableLink?: boolean | null;
+    link?: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+        | ({
+        relationTo: 'posts';
+        value: number | Post;
+      } | null);
+      url?: string | null;
+      label: string;
+      /**
+       * Choose how the link should be rendered.
+       */
+      appearance?: ('default' | 'outline') | null;
+    };
+    id?: string | null;
+  }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock".
+ */
+export interface ArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+    relationTo: 'posts';
+    value: number | Post;
+  }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive';
+}
+
+export interface ArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+    relationTo: 'posts';
+    value: number | Post;
+  }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive';
+}
+
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeBlock".
+ */
+export interface CodeBlock {
+  language?: ('typescript' | 'javascript' | 'css') | null;
+  code: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'code';
+}
+
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
