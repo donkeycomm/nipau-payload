@@ -97,7 +97,7 @@ export const HomePage: Block = {
     },
   ],
   labels: {
-    plural: 'Homepages',
-    singular: 'Homepage',
+    plural: 'Home',
+    singular: 'Home',
   },
 }

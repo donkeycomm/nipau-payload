@@ -1,9 +1,9 @@
 import type { Block } from 'payload'
 import { contentBlock } from "@/blocks/ContentBlock/config";
 
-export const AboutPage: Block = {
-  slug: 'page_about',
-  interfaceName: 'AboutPage',
+export const ShowroomPage: Block = {
+  slug: 'page_showroom',
+  interfaceName: 'ShowroomPage',
   fields: [
     {
       name: 'layout',
@@ -16,7 +16,7 @@ export const AboutPage: Block = {
     },
   ],
   labels: {
-    plural: 'About',
-    singular: 'About',
+    plural: 'Showroom',
+    singular: 'Showroom',
   },
 }

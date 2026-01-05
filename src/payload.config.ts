@@ -13,9 +13,9 @@ import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
-import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import fs from "fs";
+import {Brands} from "@/collections/Brands";
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -77,7 +77,7 @@ export default buildConfig({
         }),
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Brands, Posts, Media, Categories, Users],
   localization: {
     locales: ['en', 'nl'], // required
     defaultLocale: 'en', // required

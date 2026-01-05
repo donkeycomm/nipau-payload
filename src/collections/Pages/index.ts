@@ -17,6 +17,10 @@ import {
 
 import { HomePage } from "@/blocks/Homepage/config";
 import { AboutPage } from "@/blocks/About/config";
+import {ShowroomPage} from "@/blocks/Showroom/config";
+import {BrandsPage} from "@/blocks/Brandspage/config";
+import {EventsPage} from "@/blocks/Eventspage/config";
+import {ContactPage} from "@/blocks/Contactpage/config";
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -65,7 +69,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [HomePage, AboutPage],
+              blocks: [HomePage, AboutPage, ShowroomPage, BrandsPage, EventsPage, ContactPage],
               maxRows: 1,
               required: true,
               admin: {
