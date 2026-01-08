@@ -39,6 +39,7 @@ export const HomePage: Block = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'description',
@@ -54,8 +55,8 @@ export const HomePage: Block = {
         },
       }),
       label: "Description",
+      localized: true,
     },
-
     {
       name: 'media5',
       type: 'upload',
@@ -94,6 +95,7 @@ export const HomePage: Block = {
         },
       }),
       label: "Description 2",
+      localized: true,
     },
   ],
   labels: {
