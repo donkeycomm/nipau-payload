@@ -15,6 +15,7 @@ export const ContactPage: Block = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'description',
@@ -30,6 +31,7 @@ export const ContactPage: Block = {
         },
       }),
       label: "Description",
+      localized: true,
     },
     {
       name: 'media',
@@ -43,24 +45,28 @@ export const ContactPage: Block = {
       label: 'Address - title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'phone',
       label: 'Phone - title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'showroom',
       label: 'Showroom - title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'office',
       label: 'Office - title',
       type: 'text',
       required: true,
+      localized: true,
     },
   ],
   labels: {

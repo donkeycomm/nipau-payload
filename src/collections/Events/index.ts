@@ -103,6 +103,7 @@ export const Events: CollectionConfig<'events'> = {
                 },
               }),
               required: true,
+              localized: true,
             },
             {
               name: 'content2',
@@ -121,12 +122,14 @@ export const Events: CollectionConfig<'events'> = {
                 },
               }),
               required: true,
+              localized: true,
             },
             {
               name: 'tickets',
               label: 'Ticket link',
               type: 'text',
               required: false,
+              localized: true,
             },
           ],
           label: 'Content',

@@ -28,6 +28,7 @@ export default buildConfig({
   localization: {
     locales: ['en', 'nl'], // required
     defaultLocale: 'en', // required
+    fallback: true,
   },
   admin: {
     user: Users.slug,

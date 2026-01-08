@@ -96,22 +96,27 @@ export const Brands: CollectionConfig<'brands'> = {
               }),
               label: false,
               required: true,
+              localized: true,
             },
 
             {
               name: 'catalogue',
               type: 'text',
               required: true,
+              localized: true,
             },
             {
               name: 'pos',
-              label: 'become a point of sale',              type: 'text',
+              label: 'become a point of sale',
+              type: 'text',
               required: true,
+              localized: true,
             },
             {
               name: 'instagram',
               type: 'text',
               required: true,
+              localized: true,
             },
           ],
           label: 'Content',

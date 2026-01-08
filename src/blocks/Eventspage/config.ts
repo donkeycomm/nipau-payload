@@ -15,6 +15,7 @@ export const EventsPage: Block = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'description',
@@ -30,6 +31,7 @@ export const EventsPage: Block = {
         },
       }),
       label: "Description",
+      localized: true,
     },
   ],
   labels: {

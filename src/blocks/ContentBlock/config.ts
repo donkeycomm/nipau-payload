@@ -25,6 +25,7 @@ export const contentBlock: Block = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'description',
@@ -40,6 +41,7 @@ export const contentBlock: Block = {
         },
       }),
       label: "Description",
+      localized: true,
     },
   ]
 }

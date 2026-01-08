@@ -72,8 +72,9 @@ export const Pages: CollectionConfig<'pages'> = {
               blocks: [HomePage, AboutPage, ShowroomPage, BrandsPage, EventsPage, ContactPage],
               maxRows: 1,
               required: true,
+              localized: true,
               admin: {
-                initCollapsed: true,
+                initCollapsed: false,
               },
             },
           ],

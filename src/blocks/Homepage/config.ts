@@ -57,6 +57,7 @@ export const HomePage: Block = {
       label: "Description",
       localized: true,
     },
+
     {
       name: 'media5',
       type: 'upload',
