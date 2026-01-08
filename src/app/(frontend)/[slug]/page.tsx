@@ -3,8 +3,7 @@ export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
 
 import { PayloadRedirects } from '@/components/PayloadRedirects'
-import configPromise from '@payload-config'
-import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
+import { type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
@@ -13,7 +12,6 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-
 
 export default async function Page({ params: paramsPromise }: any) {
   const { isEnabled: draft } = await draftMode()
@@ -51,19 +49,17 @@ export default async function Page({ params: paramsPromise }: any) {
   )
 }
 
-export async function generateMetadata({ params: paramsPromise }: any): Promise<Metadata> {
-  const { slug = 'home' } = await paramsPromise
-  // Decode to support slugs with special characters
-  const decodedSlug = decodeURIComponent(slug)
-  const page = await queryPageBySlug({
-    slug: decodedSlug,
-  })
-
-  return generateMeta({ doc: page })
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Home',
+  }
 }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
+
+  const { getPayload } = await import('payload')
+  const configPromise = (await import('@payload-config')).default
 
   const payload = await getPayload({ config: configPromise })
 
