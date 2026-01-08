@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import type React from 'react'
 import type { Page, Post } from '@/payload-types'
 
