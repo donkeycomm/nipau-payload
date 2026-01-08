@@ -21,6 +21,8 @@ import {Events} from "@/collections/Events";
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 const isProduction = process.env.NODE_ENV === 'production'
+const isBuild =
+  process.env.NEXT_PHASE === 'phase-production-build'
 
 export default buildConfig({
   localization: {
@@ -68,7 +70,10 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: postgresAdapter({
+  // @ts-ignore
+  db: isBuild
+  ? undefined
+  : postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
       ...(isProduction
