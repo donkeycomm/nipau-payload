@@ -14,22 +14,27 @@ export const Footer: GlobalConfig = {
       name: 'address',
       type: 'text',
       required: true,
+      localized: true,
     },{
       name: 'phone',
       type: 'text',
       required: true,
+      localized: true,
     },{
       name: 'mail',
       type: 'text',
       required: true,
+      localized: true,
     },{
       name: 'showroom',
       type: 'text',
       required: true,
+      localized: true,
     },{
       name: 'office',
       type: 'text',
       required: true,
+      localized: true,
     },
   ],
   hooks: {
