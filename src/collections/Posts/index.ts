@@ -67,6 +67,7 @@ export const Posts: CollectionConfig<'posts'> = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       type: 'tabs',
@@ -95,6 +96,7 @@ export const Posts: CollectionConfig<'posts'> = {
               }),
               label: false,
               required: true,
+              localized: true,
             },
           ],
           label: 'Content',
