@@ -26,7 +26,7 @@ const isBuild =
 
 export default buildConfig({
   localization: {
-    locales: ['en', 'nl'], // required
+    locales: ['en', 'nl', "fr"], // required
     defaultLocale: 'en', // required
     fallback: true,
   },
@@ -37,7 +37,6 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: 'Nipau CMS',
-
       description:
         'Nipau CMS is a headless content management system for managing your content easily.',
       authors: [
